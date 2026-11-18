@@ -1,0 +1,194 @@
+# Hangman word list
+# Format: CATEGORY|WORD|CLUE      (lines starting with # are ignored)
+# Words may contain letters and spaces only. Add your own words freely.
+
+Animals|CAT|Purring pet that loves to nap
+Animals|TIGER|Striped big cat, national animal of India
+Animals|ZEBRA|Horse-like animal with black and white stripes
+Animals|PANDA|Black-and-white bear that eats bamboo
+Animals|CAMEL|Desert animal that stores fat in its hump
+Animals|OTTER|Playful river mammal that floats on its back
+Animals|PENGUIN|Flightless bird of the Antarctic
+Animals|DOLPHIN|Intelligent marine mammal that uses echolocation
+Animals|GIRAFFE|Tallest animal on Earth
+Animals|PEACOCK|National bird of India with a spectacular tail
+Animals|ELEPHANT|Largest land mammal, has a trunk
+Animals|KANGAROO|Australian marsupial that hops
+Animals|CHAMELEON|Lizard that changes colour
+Animals|CROCODILE|Large reptile with powerful jaws
+Animals|RHINOCEROS|Thick-skinned animal with a horn on its nose
+Animals|HUMMINGBIRD|Tiny bird that can fly backwards
+Animals|SNOW LEOPARD|Rare big cat of the Himalayas
+Animals|DOG|Loyal pet known as man's best friend
+Animals|OWL|Night bird that can turn its head almost all the way round
+Animals|YAK|Long-haired ox of the Himalayas
+Animals|LION|King of the jungle
+Animals|BEAR|Large furry animal that hibernates
+Animals|WOLF|Wild relative of the dog that howls
+Animals|DEER|Animal with antlers
+Animals|MONKEY|Tree-climbing primate that loves bananas
+Animals|RABBIT|Long-eared animal that hops
+Animals|TURTLE|Reptile that carries its home on its back
+
+Food|MANGO|King of fruits
+Food|DOSA|Thin crispy South Indian crepe
+Food|IDLI|Steamed rice cake served with sambar
+Food|PIZZA|Italian flatbread with cheese and toppings
+Food|LADDU|Round Indian sweet often made with besan
+Food|BIRYANI|Spiced rice layered with meat or vegetables
+Food|SAMOSA|Fried triangular pastry with a potato filling
+Food|PANEER|Fresh Indian cottage cheese
+Food|CHOCOLATE|Sweet treat made from cocoa beans
+Food|PINEAPPLE|Tropical fruit with a spiky crown
+Food|WATERMELON|Large green fruit, red and juicy inside
+Food|STRAWBERRY|Red fruit with seeds on the outside
+Food|GULAB JAMUN|Fried milk balls soaked in sugar syrup
+Food|PONGAL|Rice and lentil dish, also a harvest festival
+Food|AVOCADO|Creamy green fruit used in guacamole
+Food|TEA|Hot drink brewed from leaves
+Food|JAM|Sweet fruit spread for bread
+Food|PIE|Baked dish with a pastry crust
+Food|RICE|Staple grain of South India
+Food|SANDWICH|Filling between two slices of bread
+Food|MUSHROOM|Edible fungus with a cap
+
+Space|MOON|Earth's natural satellite
+Space|MARS|The red planet
+Space|COMET|Icy body with a glowing tail
+Space|ORBIT|Curved path around a star or planet
+Space|GALAXY|Huge system of stars like the Milky Way
+Space|NEBULA|Cloud of gas and dust where stars are born
+Space|JUPITER|Largest planet in the solar system
+Space|SATURN|Planet famous for its rings
+Space|ASTEROID|Rocky body orbiting the Sun
+Space|ASTRONAUT|Person trained to travel into space
+Space|TELESCOPE|Instrument used to see distant objects
+Space|BLACK HOLE|Region where gravity lets nothing escape
+Space|CHANDRAYAAN|India's lunar exploration mission
+Space|CONSTELLATION|Group of stars forming a pattern
+Space|SUPERNOVA|Powerful explosion of a dying star
+Space|SUN|Star at the centre of our solar system
+Space|UFO|Unidentified flying object
+Space|STAR|Ball of hot glowing gas
+Space|MERCURY|Planet closest to the Sun
+Space|ECLIPSE|When one body blocks the light of another
+Space|UNIVERSE|Everything that exists
+
+Programming|LOOP|Repeats a block of code
+Programming|CLASS|Blueprint for creating objects
+Programming|ARRAY|Fixed-size collection of elements
+Programming|OBJECT|Instance of a class
+Programming|POINTER|Variable that stores a memory address
+Programming|COMPILER|Translates source code into machine code
+Programming|FUNCTION|Named block of reusable code
+Programming|TEMPLATE|C++ feature for generic programming
+Programming|INHERITANCE|A derived class reusing a base class
+Programming|DESTRUCTOR|Member function called when an object dies
+Programming|CONSTRUCTOR|Member function that initialises an object
+Programming|POLYMORPHISM|One interface, many forms
+Programming|ENCAPSULATION|Bundling data with the methods that use it
+Programming|ABSTRACTION|Showing essentials, hiding details
+Programming|EXCEPTION|Signals an error at run time
+Programming|VIRTUAL FUNCTION|Member function resolved by late binding
+Programming|OPERATOR OVERLOADING|Giving operators new meaning for classes
+Programming|BIT|Smallest unit of data: 0 or 1
+Programming|BUG|Error in a program
+Programming|NEW|C++ operator that allocates heap memory
+Programming|CODE|Instructions written by a programmer
+Programming|VOID|Return type of a function that returns nothing
+Programming|BYTE|Group of eight bits
+Programming|SYNTAX|Grammar rules of a programming language
+Programming|STRUCT|C++ keyword for a record type with public members
+Programming|VECTOR|Resizable array in the C++ standard library
+Programming|PROGRAM|Set of instructions a computer runs
+Programming|BOOLEAN|Data type with only true or false
+
+Indian Cities|PUNE|Oxford of the East
+Indian Cities|AGRA|Home of the Taj Mahal
+Indian Cities|GOA|Smallest state famous for beaches
+Indian Cities|DELHI|National capital
+Indian Cities|MUMBAI|Financial capital, home of Bollywood
+Indian Cities|JAIPUR|The Pink City
+Indian Cities|MADURAI|Temple city on the Vaigai river
+Indian Cities|CHENNAI|Capital of Tamil Nadu
+Indian Cities|KOLKATA|City of Joy
+Indian Cities|BENGALURU|Silicon Valley of India
+Indian Cities|HYDERABAD|City of Pearls and Charminar
+Indian Cities|AHMEDABAD|City on the Sabarmati river
+Indian Cities|COIMBATORE|Manchester of South India
+Indian Cities|THIRUVANANTHAPURAM|Capital of Kerala
+Indian Cities|VISAKHAPATNAM|Port city on the east coast
+Indian Cities|SURAT|Diamond city of Gujarat
+Indian Cities|PATNA|Capital of Bihar on the Ganga
+Indian Cities|SALEM|Steel city of Tamil Nadu
+Indian Cities|NAGPUR|Orange city at the centre of India
+Indian Cities|LUCKNOW|City of Nawabs
+Indian Cities|VADODARA|Gujarat city also called Baroda
+Indian Cities|SRINAGAR|Summer capital of Jammu and Kashmir
+
+Sports|GOLF|Played with clubs on a course with holes
+Sports|CHESS|Board game with kings and queens
+Sports|HOCKEY|Played with sticks and a ball or puck
+Sports|TENNIS|Racket sport played at Wimbledon
+Sports|KABADDI|Contact sport where raiders chant
+Sports|CRICKET|Bat-and-ball game with wickets
+Sports|ARCHERY|Shooting arrows at a target
+Sports|FOOTBALL|Most popular sport in the world
+Sports|BADMINTON|Racket sport with a shuttlecock
+Sports|MARATHON|Long-distance race of about 42 km
+Sports|VOLLEYBALL|Ball is hit over a high net
+Sports|WRESTLING|Combat sport of grappling
+Sports|SWIMMING|Racing through water
+Sports|TABLE TENNIS|Also called ping pong
+Sports|WEIGHTLIFTING|Lifting a barbell overhead
+Sports|SKI|Glide over snow on long boards
+Sports|BOX|Fight with gloves inside a ring
+Sports|POLO|Played on horseback with mallets
+Sports|JUDO|Japanese martial art of throws
+Sports|RUGBY|Team sport with an oval ball
+Sports|SQUASH|Racket sport played in a walled court
+
+Science|ATOM|Smallest unit of an element
+Science|CELL|Basic unit of life
+Science|GENE|Unit of heredity
+Science|OXYGEN|Gas we need to breathe
+Science|GRAVITY|Force that pulls objects together
+Science|NEUTRON|Particle in the nucleus with no charge
+Science|MAGNET|Attracts iron
+Science|MOLECULE|Two or more atoms bonded together
+Science|ELECTRON|Negatively charged particle
+Science|PHOTOSYNTHESIS|How plants make food from sunlight
+Science|EVAPORATION|Liquid turning into vapour
+Science|THERMOMETER|Measures temperature
+Science|MICROSCOPE|Shows very small things
+Science|VOLCANO|Mountain that erupts lava
+Science|EARTHQUAKE|Sudden shaking of the ground
+Science|GAS|State of matter that fills its container
+Science|ION|Atom with an electric charge
+Science|DNA|Molecule that carries genetic code
+Science|LASER|Narrow beam of concentrated light
+Science|PRISM|Glass that splits light into colours
+Science|FORCE|A push or a pull
+
+Countries|PERU|Home of Machu Picchu
+Countries|INDIA|Largest democracy in the world
+Countries|JAPAN|Land of the rising sun
+Countries|NEPAL|Home of Mount Everest
+Countries|EGYPT|Land of the pyramids
+Countries|BRAZIL|Largest country in South America
+Countries|CANADA|Country with the maple leaf flag
+Countries|GERMANY|European nation, capital Berlin
+Countries|AUSTRALIA|Country and continent
+Countries|SINGAPORE|Island city-state in Southeast Asia
+Countries|ARGENTINA|Land of tango
+Countries|SWITZERLAND|Famous for watches and chocolate
+Countries|NEW ZEALAND|Island nation with kiwi birds
+Countries|SOUTH AFRICA|Rainbow nation
+Countries|INDONESIA|Largest archipelago nation
+Countries|CUBA|Caribbean island nation, capital Havana
+Countries|FIJI|Pacific island nation of over 300 islands
+Countries|OMAN|Arab country on the Arabian Sea
+Countries|VIETNAM|Southeast Asian country, capital Hanoi
+Countries|PORTUGAL|European country, capital Lisbon
+Countries|THAILAND|Land of smiles, capital Bangkok
+Countries|MALAYSIA|Home of the Petronas Towers

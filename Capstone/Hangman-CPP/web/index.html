@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hangman — C++ Edition</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Night sky background -->
+<div class="sky" aria-hidden="true">
+  <div class="stars" id="stars"></div>
+  <div class="fog fog-1"></div>
+  <div class="fog fog-2"></div>
+</div>
+<div class="flash" id="flash" aria-hidden="true"></div>
+<div class="vignette" id="vignette" aria-hidden="true"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- SVG icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v3a5 5 0 0 1-10 0V4zM5 5H3v2a4 4 0 0 0 4 4M19 5h2v2a4 4 0 0 1-4 4M12 12v4M8 20h8M9 20l1-4h4l1 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.7.3-1.1.9-1.1 1.6v.5M12 17.2v.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 22c-4 0-7-2.8-7-6.6 0-3.1 2-5.3 3.6-7 .4 1.6 1.3 2.7 2.4 3.2C11 7.7 12.6 4.6 15.5 2c-.3 3.2 1.2 5 2.4 6.6 1 1.4 2.1 3 2.1 5.2C20 19 16.3 22 12 22z" fill="currentColor"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-7.6-4.6-9.7-9.3C.8 8.3 3 4.4 6.8 4.4c2.1 0 3.7 1.2 5.2 3.2 1.5-2 3.1-3.2 5.2-3.2 3.8 0 6 3.9 4.5 7.3C19.6 16.4 12 21 12 21z"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-scroll" viewBox="0 0 24 24"><path d="M7 4h11a2 2 0 0 1 2 2v1h-4M7 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7M7 4a2 2 0 0 1 2 2v12M12 10h4M12 14h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M5 12h12M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8M14 4v6M8 14v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .6 3.2 2.4 3.5 5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-icon" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M8 36V4h20v6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="28" cy="15" r="4.5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M4 36h16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <h1 class="title" aria-label="Hangman"><span>H</span><span>A</span><span>N</span><span>G</span><span>M</span><span>A</span><span>N</span></h1>
+      <span class="tag">C++ EDITION</span>
+    </div>
+  </div>
+
+  <div class="stats" aria-live="polite">
+    <div class="stat"><span class="stat-value" id="statScore">0</span><span class="stat-label">Score</span></div>
+    <div class="stat stat-streak" id="streakBox"><span class="stat-value"><svg class="ico"><use href="#i-fire"/></svg><b id="statStreak">0</b></span><span class="stat-label">Streak</span></div>
+    <div class="stat"><span class="stat-value good" id="statWins">0</span><span class="stat-label">Saved</span></div>
+    <div class="stat"><span class="stat-value bad" id="statLosses">0</span><span class="stat-label">Hanged</span></div>
+  </div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="btnBoard" title="Leaderboard" aria-label="Leaderboard"><svg><use href="#i-trophy"/></svg></button>
+    <button class="icon-btn" id="btnSound" title="Sound on/off" aria-label="Toggle sound"><svg><use href="#i-sound"/></svg></button>
+    <button class="icon-btn" id="btnHelp" title="How to play" aria-label="How to play"><svg><use href="#i-help"/></svg></button>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- ===================== THE SCENE ===================== -->
+  <section class="scene-wrap" id="sceneWrap">
+    <svg id="scene" class="mood-calm" viewBox="0 0 400 440" role="img" aria-label="Gallows">
+      <defs>
+        <radialGradient id="gMoonGlow">
+          <stop offset="0" stop-color="#fff6d6" stop-opacity=".55"/>
+          <stop offset=".45" stop-color="#ffe7a3" stop-opacity=".15"/>
+          <stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="gMoon" cx=".4" cy=".35">
+          <stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e9dcb8"/>
+        </radialGradient>
+        <linearGradient id="gWoodV" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#5a3a22"/><stop offset=".45" stop-color="#8a5c37"/><stop offset="1" stop-color="#4a2f1b"/>
+        </linearGradient>
+        <linearGradient id="gWoodH" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#94643d"/><stop offset=".55" stop-color="#6e4628"/><stop offset="1" stop-color="#47301c"/>
+        </linearGradient>
+        <linearGradient id="gHillBack" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2a2153"/><stop offset="1" stop-color="#140f30"/>
+        </linearGradient>
+        <linearGradient id="gHillFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#17112f"/><stop offset="1" stop-color="#0a0818"/>
+        </linearGradient>
+        <radialGradient id="gFade" cx=".5" cy=".42" r=".62">
+          <stop offset=".7" stop-color="#fff"/><stop offset="1" stop-color="#000"/>
+        </radialGradient>
+        <mask id="mFade" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="440">
+          <rect width="400" height="440" fill="url(#gFade)"/>
+        </mask>
+        <filter id="fChalk" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- backdrop -->
+      <g class="backdrop" mask="url(#mFade)">
+        <circle class="moon-glow" cx="318" cy="92" r="88" fill="url(#gMoonGlow)"/>
+        <g class="moon">
+          <circle cx="318" cy="92" r="34" fill="url(#gMoon)"/>
+          <circle cx="306" cy="84" r="6" fill="#d9caa2" opacity=".55"/>
+          <circle cx="326" cy="104" r="8" fill="#d9caa2" opacity=".45"/>
+          <circle cx="331" cy="79" r="3.5" fill="#d9caa2" opacity=".5"/>
+        </g>
+        <path class="cloud" d="M232 120 q12 -14 30 -6 q10 -14 28 -4 q18 -4 22 10 q14 2 10 12 h-96 q-8 -10 6 -12z"/>
+        <path d="M0 362 Q 70 318 150 350 T 300 336 T 400 344 V440 H0Z" fill="url(#gHillBack)"/>
+        <!-- dead tree with crows -->
+        <g class="tree">
+          <path d="M372 410 C 368 360 380 330 366 290 C 358 266 344 252 330 246 M 366 292 C 374 270 388 262 398 258 M 352 262 C 350 248 356 236 352 226 M 368 330 C 352 326 342 318 336 306"
+                fill="none" stroke="#0c0a1c" stroke-width="7" stroke-linecap="round"/>
+          <path d="M372 410 C 368 360 380 330 366 290" fill="none" stroke="#0c0a1c" stroke-width="13" stroke-linecap="round"/>
+        </g>
+        <g class="crow crow-1" transform="translate(334 238)">
+          <path d="M0 8 q2 -9 9 -8 l4 -3 l-1 4 q5 3 4 8 l-4 0 l2 5 l-3 0 l-2 -4 l-6 0 q-5 0 -3 -2z" fill="#07060f"/>
+        </g>
+        <g class="crow crow-2" transform="translate(381 250) scale(-1 1)">
+          <path d="M0 8 q2 -9 9 -8 l4 -3 l-1 4 q5 3 4 8 l-4 0 l2 5 l-3 0 l-2 -4 l-6 0 q-5 0 -3 -2z" fill="#07060f"/>
+        </g>
+        <path d="M0 400 Q 110 378 210 398 T 400 392 V440 H0Z" fill="url(#gHillFront)"/>
+      </g>
+
+      <!-- gallows: steps 0-3 -->
+      <g id="gallows">
+        <g class="part wood grow-up" data-step="0">
+          <rect x="78" y="338" width="12" height="70" fill="url(#gWoodV)"/>
+          <rect x="310" y="338" width="12" height="70" fill="url(#gWoodV)"/>
+          <rect x="212" y="342" width="76" height="60" fill="#05040b" opacity=".85"/>
+          <rect x="60" y="328" width="152" height="14" rx="2" fill="url(#gWoodH)"/>
+          <rect x="288" y="328" width="52" height="14" rx="2" fill="url(#gWoodH)"/>
+          <rect class="door door-l" x="212" y="328" width="38" height="14" fill="url(#gWoodH)" stroke="#3a2513" stroke-width="1"/>
+          <rect class="door door-r" x="250" y="328" width="38" height="14" fill="url(#gWoodH)" stroke="#3a2513" stroke-width="1"/>
+          <path d="M70 335h130M300 335h30" stroke="#3a2513" stroke-width="1" opacity=".6"/>
+        </g>
+        <rect class="part wood grow-up" data-step="1" x="104" y="48" width="14" height="282" rx="2" fill="url(#gWoodV)"/>
+        <g class="part wood grow-right" data-step="2">
+          <rect x="96" y="44" width="176" height="14" rx="2" fill="url(#gWoodH)"/>
+          <path d="M118 108 L 164 58" stroke="url(#gWoodV)" stroke-width="10" stroke-linecap="round"/>
+        </g>
+
+        <!-- rope + man swing together -->
+        <g id="swing">
+          <g class="part rope grow-down" data-step="3">
+            <line class="rope-line" x1="250" y1="58" x2="250" y2="130" stroke="#c9a36b" stroke-width="4" stroke-linecap="round"/>
+            <line x1="250" y1="58" x2="250" y2="130" stroke="#7d5c33" stroke-width="4" stroke-dasharray="3 4" stroke-linecap="round"/>
+          </g>
+          <g id="man" filter="url(#fChalk)">
+            <circle class="part stroke head" data-step="4" cx="250" cy="150" r="20" pathLength="1"/>
+            <g class="face">
+              <path class="brows" d="M239 140 l7 2.5 M261 140 l-7 2.5"/>
+              <g class="eyes-open"><circle cx="243.5" cy="147" r="2.4"/><circle cx="256.5" cy="147" r="2.4"/></g>
+              <path class="eyes-x" d="M240 143.5 l6 6 M246 143.5 l-6 6 M254 143.5 l6 6 M260 143.5 l-6 6"/>
+              <path class="eyes-happy" d="M240 148 q3.5 -5 7 0 M253 148 q3.5 -5 7 0"/>
+              <path class="mouth mouth-smile" d="M243 156 Q250 163 257 156"/>
+              <path class="mouth mouth-flat" d="M244 158.5 L256 158.5"/>
+              <path class="mouth mouth-frown" d="M243 161 Q250 154.5 257 161"/>
+              <ellipse class="mouth mouth-o" cx="250" cy="159" rx="3" ry="4"/>
+              <path class="mouth mouth-dead" d="M243 160 q3.5 -3 7 0 q3.5 3 7 0"/>
+              <path class="sweat" d="M271 136 q-3 6 0 8 q3 -2 0 -8z"/>
+            </g>
+            <path class="part stroke" data-step="5" d="M250 170 L250 262" pathLength="1"/>
+            <path class="part stroke arm" data-step="6" d="M250 188 L221 232" pathLength="1"/>
+            <path class="part stroke arm" data-step="7" d="M250 188 L279 232" pathLength="1"/>
+            <path class="part stroke" data-step="8" d="M250 262 L229 326" pathLength="1"/>
+            <path class="part stroke" data-step="9" d="M250 262 L271 326" pathLength="1"/>
+            <path class="arms-up" d="M250 188 L224 150 M250 188 L276 150"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <div class="scene-caption" id="sceneCaption">Pick a word to begin</div>
+  </section>
+
+  <!-- ===================== THE PANEL ===================== -->
+  <section class="panel" aria-label="Game controls">
+    <div class="meta">
+      <div class="chips">
+        <span class="chip" id="chipCategory">—</span>
+        <span class="chip chip-level" id="chipLevel">—</span>
+      </div>
+      <div class="timer hidden" id="timer" title="Time left">
+        <svg viewBox="0 0 44 44"><circle class="timer-track" cx="22" cy="22" r="19"/><circle class="timer-bar" id="timerBar" cx="22" cy="22" r="19" pathLength="100"/></svg>
+        <span id="timerText">90</span>
+      </div>
+    </div>
+
+    <div class="lives" id="lives" aria-label="Lives"></div>
+
+    <div class="word" id="word" aria-live="polite"></div>
+
+    <div class="clue" id="clue">
+      <svg class="ico"><use href="#i-scroll"/></svg>
+      <span id="clueText">Clue hidden</span>
+    </div>
+
+    <div class="hint-row">
+      <button class="btn btn-hint" id="btnHintLetter"><svg class="ico"><use href="#i-bulb"/></svg>Reveal a letter <span class="badge" id="hintCount">0</span></button>
+      <button class="btn btn-hint" id="btnHintClue"><svg class="ico"><use href="#i-eye"/></svg>Show clue</button>
+    </div>
+
+    <div class="keyboard" id="keyboard" aria-label="Letters"></div>
+
+    <form class="solve" id="solveForm" autocomplete="off">
+      <input id="solveInput" maxlength="30" placeholder="Know the whole word? Type it here…" aria-label="Solve the word">
+      <button class="btn btn-solve" type="submit">Solve</button>
+    </form>
+    <p class="solve-note">A wrong solve counts as <b>1 wrong guess</b>.</p>
+    <div class="wrong-words" id="wrongWords"></div>
+
+    <div class="panel-actions">
+      <button class="btn btn-ghost" id="btnNew"><svg class="ico"><use href="#i-next"/></svg><span>Skip word</span></button>
+      <button class="btn btn-ghost" id="btnGiveUp"><svg class="ico"><use href="#i-flag"/></svg><span>Give up</span></button>
+      <button class="btn btn-ghost" id="btnSettings"><svg class="ico"><use href="#i-sliders"/></svg><span>Change mode</span></button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">Game engine &amp; web server written in C++17 · <span id="footInfo">connecting…</span></footer>
+
+<!-- ===================== MODALS ===================== -->
+<div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+  <div class="card card-start">
+    <h2 id="startTitle" class="card-title">Save the man.<br><span>Guess the word.</span></h2>
+    <div class="tabs">
+      <button class="tab active" data-tab="solo">Single player</button>
+      <button class="tab" data-tab="duo"><svg class="ico"><use href="#i-users"/></svg>Two players</button>
+    </div>
+
+    <label class="field"><span>Your name</span><input id="nameInput" maxlength="16" placeholder="Player"></label>
+
+    <div class="field"><span>Difficulty</span><div class="levels" id="levels"></div></div>
+
+    <div class="tab-body" data-body="solo">
+      <div class="field"><span>Category</span><div class="cats" id="cats"></div></div>
+      <div class="field"><span>Word length (letters)</span><div class="cats" id="lengths"></div></div>
+      <button class="btn btn-primary btn-big" id="btnStart">Start game</button>
+    </div>
+
+    <div class="tab-body hidden" data-body="duo">
+      <p class="muted">Player 1 types a secret word while Player 2 looks away. Player 2 then plays to guess it.</p>
+      <label class="field"><span>Secret word</span>
+        <div class="secret"><input id="secretInput" type="password" maxlength="30" placeholder="e.g. BINARY SEARCH">
+          <button class="icon-btn small" type="button" id="btnPeek" aria-label="Show or hide the word"><svg><use href="#i-eye"/></svg></button></div>
+      </label>
+      <label class="field"><span>Clue (optional)</span><input id="secretClue" maxlength="80" placeholder="A short hint for your friend"></label>
+      <button class="btn btn-primary btn-big" id="btnStartDuo">Hand over &amp; start</button>
+    </div>
+    <p class="error-text" id="startError"></p>
+  </div>
+</div>
+
+<div class="modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+  <div class="card card-result">
+    <div class="result-badge" id="resultBadge"></div>
+    <h2 class="result-title" id="resultTitle">Saved!</h2>
+    <p class="result-sub" id="resultSub"></p>
+    <div class="result-word" id="resultWord"></div>
+    <p class="result-clue" id="resultClue"></p>
+    <div class="result-points" id="resultPointsBox"><span id="resultPoints">0</span><small>points</small></div>
+    <div class="result-grid" id="resultGrid"></div>
+    <p class="result-rank" id="resultRank"></p>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btnNext"><svg class="ico"><use href="#i-next"/></svg>Next word</button>
+      <button class="btn btn-ghost" id="btnResultMode"><svg class="ico"><use href="#i-sliders"/></svg>Change mode</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="boardModal" role="dialog" aria-modal="true" aria-labelledby="boardTitle">
+  <div class="card card-board">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="card-title small" id="boardTitle"><svg class="ico"><use href="#i-trophy"/></svg>Hall of Survivors</h2>
+    <p class="muted">Top 10 rounds, saved by the C++ engine in <code>data/scores.txt</code></p>
+    <div class="board" id="board"></div>
+  </div>
+</div>
+
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="card card-help">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="card-title small" id="helpTitle">How to play</h2>
+    <ul class="help-list">
+      <li>Guess the hidden word one letter at a time — click the keys or type on your keyboard.</li>
+      <li>Pick a word length (3, 4, 5 … 9+ letters) or Any on the start screen.</li>
+      <li>You get <b>6 wrong guesses</b>. Each one draws the next part of the hangman: head, body, left arm, right arm, left leg, right leg. The sixth opens the trapdoor.</li>
+      <li>Know the word? Type it in the <b>Solve</b> box. A wrong solve counts as one wrong guess.</li>
+      <li><b>Hints:</b> reveal a letter or show the clue. Each costs one hint and 15 points.</li>
+      <li><b>Easy:</b> 3 hints, clue shown · <b>Medium:</b> 2 hints, ×1.5 points · <b>Hard:</b> 1 hint, 90-second timer, ×2.5 points.</li>
+      <li><b>Score:</b> 10 per unique letter + 20 per life left − 15 per hint, + 2 per second left on Hard, × difficulty multiplier.</li>
+      <li><b>Streak bonus:</b> each consecutive save adds 10% (up to 50%). Skipping or giving up resets it.</li>
+    </ul>
+    <p class="muted">Shortcuts: <kbd>A</kbd>–<kbd>Z</kbd> guess · <kbd>Enter</kbd> next word after a round · <kbd>Esc</kbd> close dialogs</p>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="assertive"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
